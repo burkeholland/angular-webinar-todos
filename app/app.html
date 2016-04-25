@@ -1,0 +1,12 @@
+<StackLayout class="main">
+    <Label text="todos" class="title"></Label>
+    <TextField class="new-todo" [(ngModel)]="newTodoText" returnKeyPress="done" (returnPress)="addTodo()"></TextField>
+	<StackLayout *ngFor="#todo of todoStore.todos">
+		<GridLayout columns="auto, *, auto" rows="auto" class="todo">
+            <Button text="{{ todo.completed ? '&#xf058;' : '&#xf1db;' }}" class="{{ todo.completed ? 'fa circles-completed' : 'fa circles' }}" col="0" (tap)="toggleCompletion(todo)"></Button>
+            <TextField [(ngModel)]="todo.title" col="1" #editedTodo class="{{ todo.completed ? 'item completed' : 'item active' }}"></TextField>
+            <Button text="&#xf00d;" col="2" (tap)="remove(todo)" class="fa remove-button"></Button>
+        </GridLayout>
+	</StackLayout>
+    <Footer></Footer>
+</StackLayout>
