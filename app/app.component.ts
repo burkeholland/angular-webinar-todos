@@ -2,6 +2,8 @@ import {Component} from "angular2/core";
 import {Todo, TodoStore} from "./services/todo";
 import {FooterComponent} from "./components/footer/footer.component";
 
+var explosion = require("nativescript-explosionfield");
+
 @Component({
     selector: "my-app",
     templateUrl: "app.html",
@@ -26,7 +28,14 @@ export class AppComponent {
         this.todoStore.toggleCompletion(todo);
     }
 
-    remove(todo: Todo) {
-        this.todoStore.remove(todo);
+    remove(event, todo: Todo) {
+        if (event.object.android) {
+            explosion.explode(event.object._parent);
+            setTimeout(() => {
+                this.todoStore.remove(todo);
+            }, 500);
+        } else {
+            this.todoStore.remove(todo);
+        }
     }
 }
